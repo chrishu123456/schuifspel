@@ -148,6 +148,17 @@ namespace SchuifSpel
 
         private void stuk_MouseMove(object sender, MouseEventArgs e)
         {
+            // wat is een stuk ?
+            // en hoe geraak je bij stuk_mousemove ? via ZetImage().
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                // MessageBox.Show(sender.ToString());
+                // tis een image dat zit in de sender
+                Image stuk = (Image)sender;
+                MessageBox.Show(stuk.Name.ToString());
+                // name geeft weer waar in de oplossing de image zich bevindt.
+
+            }
         }
 
         private void puzzelGrid_Drop(object sender, DragEventArgs e)

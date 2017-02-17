@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SchuifspelWindow" Height="575" Width="416" Loaded="Window_Loaded">
     <StackPanel Height="515">
-        <Grid Name="puzzelGrid" FlowDirection="LeftToRight">
+        <Grid Name="puzzelGrid" FlowDirection="LeftToRight" Drop="puzzelGrid_Drop">
             <Grid.RowDefinitions>
                 <RowDefinition Name="rij1" Height="100"></RowDefinition>
                 <RowDefinition Name="rij2" Height="100"></RowDefinition>
