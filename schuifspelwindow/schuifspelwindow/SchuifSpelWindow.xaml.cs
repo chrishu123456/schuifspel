@@ -167,7 +167,7 @@ namespace SchuifSpel
                 kolomvanstukdatwewillenmoven = Grid.GetColumn(stuk);
              //   MessageBox.Show(kolomvanstukdatwewillenmoven.ToString());
 
-                DataObject stukopnieuwelocatie = new DataObject("sleepstuk",stuk);
+                DataObject stukopnieuwelocatie = new DataObject("mijnstuk",stuk);
                 DragDrop.DoDragDrop(stuk, stukopnieuwelocatie, DragDropEffects.Move);
 
             }
@@ -175,11 +175,11 @@ namespace SchuifSpel
         
         private void puzzelGrid_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent("sleepstuk"))
+            if (e.Data.GetDataPresent("mijnstuk"))
             {
                 if (geldig())
                 {
-                    Image stuk = (Image)e.Data.GetData("sleepstuk");
+                    Image stuk = (Image)e.Data.GetData("mijnstuk");
                     Image stukwaarwenaarverslepen = (Image)sender;
 
                     rijwaarwenaarverslepen = Grid.GetRow(stukwaarwenaarverslepen);
