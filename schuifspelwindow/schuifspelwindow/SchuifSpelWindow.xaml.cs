@@ -19,7 +19,7 @@ namespace SchuifSpel
     /// </summary>
     public partial class SchuifSpelWindow : Window
     {
-
+        private int rijvanstukdatwewillenmoven, kolomvanstukdatwewillenmoven, kolomwaarwenaarverslepen, rijwaarwenaarverslepen;
         public SchuifSpelWindow()
         {
             InitializeComponent();
@@ -137,6 +137,8 @@ namespace SchuifSpel
             leegstuk.Name = "stuk33";
             leegstuk.Source = bl;
             zetImage(3, 3, leegstuk);
+            rijwaarwenaarverslepen = 3;
+            kolomwaarwenaarverslepen = 3;
         }
 
 
@@ -155,14 +157,59 @@ namespace SchuifSpel
                 // MessageBox.Show(sender.ToString());
                 // tis een image dat zit in de sender
                 Image stuk = (Image)sender;
-                MessageBox.Show(stuk.Name.ToString());
+           //     MessageBox.Show(stuk.Name.ToString());
                 // name geeft weer waar in de oplossing de image zich bevindt.
+                // weten we de locatie van het stuk die we moven ?
+                // gewoon proberen te moven.. nog geen zin of te controlleren of het wel kan dat we moven..
+                // toch eventjes zien of we kunnen de rij en kolom uitmaken ?
+                rijvanstukdatwewillenmoven = Grid.GetRow(stuk);
+           //     MessageBox.Show(rijvanstukdatwewillenmoven.ToString());
+                kolomvanstukdatwewillenmoven = Grid.GetColumn(stuk);
+             //   MessageBox.Show(kolomvanstukdatwewillenmoven.ToString());
+
+                DataObject stukopnieuwelocatie = new DataObject("sleepstuk",stuk);
+                DragDrop.DoDragDrop(stuk, stukopnieuwelocatie, DragDropEffects.Move);
 
             }
         }
-
+        
         private void puzzelGrid_Drop(object sender, DragEventArgs e)
         {
+            if (e.Data.GetDataPresent("sleepstuk"))
+            {
+                if (geldig())
+                {
+                    Image stuk = (Image)e.Data.GetData("sleepstuk");
+                    Image stukwaarwenaarverslepen = (Image)sender;
+
+                    rijwaarwenaarverslepen = Grid.GetRow(stukwaarwenaarverslepen);
+                    kolomwaarwenaarverslepen = Grid.GetColumn(stukwaarwenaarverslepen);
+                    //    MessageBox.Show(rijwaarwenaarverslepen.ToString());
+                    //    MessageBox.Show(kolomwaarwenaarverslepen.ToString());
+                    puzzelGrid.Children.Remove(stuk);
+                    puzzelGrid.Children.Remove(stukwaarwenaarverslepen);
+                    zetImage(rijwaarwenaarverslepen, kolomwaarwenaarverslepen, stuk);
+                    zetImage(rijvanstukdatwewillenmoven, kolomvanstukdatwewillenmoven, stukwaarwenaarverslepen);
+                    rijwaarwenaarverslepen = rijvanstukdatwewillenmoven;
+                    kolomwaarwenaarverslepen = kolomvanstukdatwewillenmoven;
+                    Check();
+                }
+              
+            }
+        }
+
+        private Boolean geldig()
+        {
+            if (((rijvanstukdatwewillenmoven + 1 == rijwaarwenaarverslepen) || (rijvanstukdatwewillenmoven - 1 == rijwaarwenaarverslepen)) &&
+(kolomvanstukdatwewillenmoven == kolomwaarwenaarverslepen))
+            { return true; }
+            else
+            {
+                if (((kolomvanstukdatwewillenmoven + 1 == kolomwaarwenaarverslepen) || (kolomvanstukdatwewillenmoven - 1 == kolomwaarwenaarverslepen)) &&
+   (rijvanstukdatwewillenmoven == rijwaarwenaarverslepen))
+                { return true; }
+            }
+            return false;
         }
 
     }
