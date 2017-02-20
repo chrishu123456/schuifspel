@@ -178,8 +178,10 @@ namespace SchuifSpel
             if (e.Data.GetDataPresent("mijnstuk"))
             {
                 if (geldig())
-                {
+              {
                     Image stuk = (Image)e.Data.GetData("mijnstuk");
+                if (sender is Image)
+                {
                     Image stukwaarwenaarverslepen = (Image)sender;
 
                     rijwaarwenaarverslepen = Grid.GetRow(stukwaarwenaarverslepen);
@@ -194,6 +196,7 @@ namespace SchuifSpel
                     kolomwaarwenaarverslepen = kolomvanstukdatwewillenmoven;
                     Check();
                 }
+               }
               
             }
         }
